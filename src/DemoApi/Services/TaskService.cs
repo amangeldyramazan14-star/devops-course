@@ -18,7 +18,8 @@ public sealed class TaskService(ITaskRepository tasks, IProjectRepository projec
             ?? throw new NotFoundException($"Проект {projectId} не найден");
 
         var task = await tasks.CreateAsync(projectId, title.Trim(), description, dueDate, ct);
-        log.LogInformation("Создана задача {TaskId} в проекте {ProjectId}", task.Id, task.ProjectId);
+        
+        log.LogInformation("Создана новая задача {TaskId} в проекте {ProjectId}", task.Id, task.ProjectId);
         return task;
     }
 
