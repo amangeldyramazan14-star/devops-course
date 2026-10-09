@@ -27,5 +27,11 @@ public sealed class ProjectService(IProjectRepository projects, ILogger<ProjectS
         log.LogInformation("Удалён проект {ProjectId}", id);
     }
 
+        public async Task<ProjectStats> GetStatsAsync(int id, CancellationToken ct)
+    {
+        await GetAsync(id, ct);
+        return await projects.GetStatsAsync(id, ct);
+    }
+
     private static NotFoundException NotFound(int id) => new($"Проект {id} не найден");
 }

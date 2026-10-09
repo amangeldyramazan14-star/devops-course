@@ -19,6 +19,12 @@ public sealed class ProjectsController(ProjectService projects) : ControllerBase
     public async Task<ProjectResponse> Get(int id, CancellationToken ct) =>
         ProjectResponse.From(await projects.GetAsync(id, ct));
 
+    [HttpGet("{id:int}/stats")]
+    [ProducesResponseType<ProjectStatsResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ProjectStatsResponse> GetStats(int id, CancellationToken ct) =>
+        ProjectStatsResponse.From(await projects.GetStatsAsync(id, ct));
+
     [HttpPost]
     [ProducesResponseType<ProjectResponse>(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
